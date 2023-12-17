@@ -110,8 +110,9 @@ extension SwiftTrace {
             fatalError("Aspect.init(name:vtableSlot:objcMethod:objcClass:replaceWith:) should not be used")
         }
 
-        open override func onEntry(stack: inout EntryStack) {
+        open override func onEntry(stack: inout EntryStack) -> String {
             entryAspect?(self, &stack)
+            return ""
         }
 
         open override func onExit(stack: inout ExitStack) {

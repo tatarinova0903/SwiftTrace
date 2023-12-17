@@ -188,7 +188,8 @@ extension SwiftTrace {
        /**
         method called before trampoline enters the target "Swizzle"
         */
-       open func onEntry(stack: inout EntryStack) {
+       @discardableResult
+       open func onEntry(stack: inout EntryStack) -> String {
            if let invocation = invocation() {
                _ = objcAdjustStret(invocation: invocation, isReturn: false,
                                    intArgs: &invocation.entryStack.pointee.intArg1)
@@ -205,9 +206,12 @@ extension SwiftTrace {
                    let decorated = entryDecorate(stack: &stack)
                    let indent = String(repeating: SwiftTrace.traceIndent,
                                     count: invocation.stackDepth)
-                   print("\(subLogging() ? "\n" : "")\(indent)\(decorated)", terminator: "")
+                   let log = "\(subLogging() ? "\n" : "")\(indent)\(decorated)"
+                   print(log, terminator: "")
+                   return log
                }
            }
+           return ""
        }
 
        /**

@@ -106,11 +106,12 @@ extension SwiftTrace {
             resetArgs()
         }
 
-        public override func onEntry(stack: inout EntryStack) {
+        public override func onEntry(stack: inout EntryStack) -> String {
             input.framePointer = stack.framePointer
             input.structReturn = stack.structReturn
             backup = stack
             stack = input
+            return ""
         }
 
         public override func onExit(stack: inout ExitStack) {
