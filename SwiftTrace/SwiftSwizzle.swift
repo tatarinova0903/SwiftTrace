@@ -231,16 +231,19 @@ extension SwiftTrace {
        /**
         method called after trampoline exits the target "Swizzle"
         */
-       open func onExit(stack: inout ExitStack) {
+       open func onExit(stack: inout ExitStack) -> String {
            if let invocation = invocation() {
                let elapsed = Invocation.usecTime() - invocation.timeEntered
                if invocation.shouldDecorate && shouldTrace() {
                    let returnValue = exitDecorate(stack: &stack)
-                   print("\(invocation.subLogged ? "\n\(String(repeating: "  ", count: invocation.stackDepth))<-" : objcMethod != nil ? " ->" : "") \(returnValue)\(String(format: SwiftTrace.timeFormat, elapsed * 1000.0))", terminator: subLogging() ? "" : "\n")
+                   let log = "\(invocation.subLogged ? "\n\(String(repeating: "  ", count: invocation.stackDepth))<-" : objcMethod != nil ? " ->" : "") \(returnValue)\(String(format: SwiftTrace.timeFormat, elapsed * 1000.0))"
+                   print(log, terminator: subLogging() ? "" : "\n")
+                   return log
                }
                totalElapsed += elapsed
                invocationCount += 1
            }
+           return ""
        }
 
        /**

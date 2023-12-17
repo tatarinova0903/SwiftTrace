@@ -115,8 +115,9 @@ extension SwiftTrace {
             return ""
         }
 
-        open override func onExit(stack: inout ExitStack) {
+        open override func onExit(stack: inout ExitStack) -> String {
             exitAspect?(self, &stack)
+            return ""
         }
     }
 }

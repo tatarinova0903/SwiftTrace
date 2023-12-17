@@ -114,9 +114,10 @@ extension SwiftTrace {
             return ""
         }
 
-        public override func onExit(stack: inout ExitStack) {
+        public override func onExit(stack: inout ExitStack) -> String {
             output = stack
             rebind(&stack.floatReturn1).pointee = backup
+            return ""
         }
 
         public func getReturn<T>() -> T {
