@@ -236,7 +236,7 @@ extension SwiftTrace {
                let elapsed = Invocation.usecTime() - invocation.timeEntered
                if invocation.shouldDecorate && shouldTrace() {
                    let returnValue = exitDecorate(stack: &stack)
-                   let log = "\(invocation.subLogged ? "\n\(String(repeating: "  ", count: invocation.stackDepth))<-" : objcMethod != nil ? " ->" : "") \(returnValue)\(String(format: SwiftTrace.timeFormat, elapsed * 1000.0))"
+                   let log = "\(invocation.subLogged ? "\n\(String(repeating: "  ", count: invocation.stackDepth))<-" : objcMethod != nil ? " ->" : "") \(returnValue)\(String(format: SwiftTrace.timeFormat, elapsed * 1000.0))" + (subLogging() ? "" : "\n")
                    print(log, terminator: subLogging() ? "" : "\n")
                    return log
                }
